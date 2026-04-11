@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backend Developer Portfolio</title>
+  <meta name="description" content="Backend Developer – Xây dựng hệ thống ổn định, tối ưu hiệu suất và luôn ưu tiên tính thực tế." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'cursor-blink':  'blink 1s step-end infinite',
+            'float':         'float 6s ease-in-out infinite',
+            'float-slow':    'float 9s ease-in-out infinite',
+            'slide-up':      'slideUp 0.6s ease-out forwards',
+            'fade-in':       'fadeIn 0.8s ease-out forwards',
+            'spin-slow':     'spin 12s linear infinite',
+          },
+          keyframes: {
+            blink:   { '0%,100%':{ opacity:1 }, '50%':{ opacity:0 } },
+            float:   { '0%,100%':{ transform:'translateY(0)' }, '50%':{ transform:'translateY(-14px)' } },
+            slideUp: { from:{ opacity:0, transform:'translateY(40px)' }, to:{ opacity:1, transform:'translateY(0)' } },
+            fadeIn:  { from:{ opacity:0 }, to:{ opacity:1 } },
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ═══════════════════════════════════════
+       CSS VARIABLES – Light Theme (default)
+    ═══════════════════════════════════════ */
+    :root {
+      --bg:           #f5f3ff;
+      --bg2:          #ffffff;
+      --bg3:          rgba(255,255,255,0.75);
+      --surface:      rgba(255,255,255,0.65);
+      --surface2:     rgba(255,255,255,0.90);
+      --text:         #1a0f3c;
+      --text2:        #4a3d72;
+      --muted:        #8b7aaa;
+      --border:       rgba(124,58,237,0.18);
+      --border-hover: rgba(236,72,153,0.50);
+      --accent1:      #7c3aed;   /* purple */
+      --accent2:      #ec4899;   /* pink   */
+      --accent3:      #f97316;   /* orange */
+      --accent-grad:  linear-gradient(135deg,#7c3aed 0%,#ec4899 50%,#f97316 100%);
+      --accent-grad2: linear-gradient(90deg,#7c3aed,#ec4899);
+      --code-bg:      #fdf4ff;
+      --code-border:  rgba(124,58,237,0.15);
+      --tag-bg:       rgba(124,58,237,0.08);
+      --tag-border:   rgba(124,58,237,0.25);
+      --tag-text:     #7c3aed;
+      --nav-bg:       rgba(245,243,255,0.85);
+      --shadow:       0 8px 40px rgba(124,58,237,0.14);
+      --shadow-hover: 0 16px 60px rgba(124,58,237,0.22);
+      --particle-r:   124; --particle-g: 58; --particle-b: 237;
+      --glow:         rgba(124,58,237,0.35);
+      --scan:         rgba(124,58,237,0.12);
+      --grid-color:   rgba(124,58,237,0.05);
+    }
+
+    /* ═══════════════════════════════════════
+       CSS VARIABLES – Dark Theme
+    ═══════════════════════════════════════ */
+    [data-theme="dark"] {
+      --bg:           #070d0e;
+      --bg2:          #0b1416;
+      --bg3:          rgba(11,20,22,0.8);
+      --surface:      rgba(16,29,31,0.65);
+      --surface2:     rgba(16,29,31,0.90);
+      --text:         #e2f0ec;
+      --text2:        #a0c4bc;
+      --muted:        #5a827a;
+      --border:       rgba(0,212,106,0.14);
+      --border-hover: rgba(0,212,106,0.45);
+      --accent1:      #00d46a;
+      --accent2:      #00a854;
+      --accent3:      #00ffaa;
+      --accent-grad:  linear-gradient(135deg,#00d46a 0%,#00a854 100%);
+      --accent-grad2: linear-gradient(90deg,#00d46a,#00ffaa);
+      --code-bg:      #0b1416;
+      --code-border:  rgba(0,212,106,0.18);
+      --tag-bg:       rgba(0,212,106,0.08);
+      --tag-border:   rgba(0,212,106,0.22);
+      --tag-text:     #00d46a;
+      --nav-bg:       rgba(7,13,14,0.88);
+      --shadow:       0 8px 40px rgba(0,212,106,0.10);
+      --shadow-hover: 0 16px 60px rgba(0,212,106,0.18);
+      --particle-r:   0; --particle-g: 212; --particle-b: 106;
+      --glow:         rgba(0,212,106,0.35);
+      --scan:         rgba(0,212,106,0.10);
+      --grid-color:   rgba(0,212,106,0.04);
+    }
+
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    /* ── Grid background ── */
+    .bg-grid {
+      background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    /* ── Gradient mesh blobs (light only) ── */
+    .mesh-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    :root body .mesh-blob { opacity: 1; }
+    [data-theme="dark"] .mesh-blob { opacity: 0; }
+
+    /* ── Glass card ── */
+    .glass {
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      transition: background 0.4s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .glass:hover {
+      border-color: var(--border-hover);
+      background: var(--surface2);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* ── Glow text ── */
+    .glow-text-light { text-shadow: 0 0 30px rgba(124,58,237,0.4), 0 0 60px rgba(236,72,153,0.2); }
+    [data-theme="dark"] .glow-text-light { text-shadow: 0 0 20px rgba(0,212,106,0.6), 0 0 40px rgba(0,212,106,0.3); }
+
+    /* ── Accent gradient text ── */
+    .grad-text {
+      background: var(--accent-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Terminal window ── */
+    .terminal {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 12px;
+      overflow: hidden;
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: var(--shadow);
+    }
+    .terminal-bar {
+      background: var(--bg2);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .terminal code { color: var(--text2); }
+    .term-prompt { color: var(--accent1); }
+    .term-cmd    { color: var(--text); }
+    .term-out    { color: var(--text2); }
+    .term-key    { color: var(--accent1); }
+    .term-val-t  { color: #10b981; }
+    .term-val-f  { color: #ef4444; }
+    .term-brace  { color: var(--accent2); }
+    .term-cursor { color: var(--accent1); }
+
+    /* ── Skill bar ── */
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 9999px;
+      background: var(--accent-grad);
+      box-shadow: 0 0 10px var(--glow);
+      transition: width 1.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .skill-bar-bg { background: var(--border); }
+
+    /* ── Nav link ── */
+    .nav-link {
+      position: relative;
+      transition: color 0.2s;
+      color: var(--text2);
+    }
+    .nav-link:hover { color: var(--accent1); }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--accent-grad2);
+      transition: width 0.3s;
+      border-radius: 2px;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ── Tag pill ── */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--tag-text);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tag:hover {
+      background: rgba(124,58,237,0.15);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--glow);
+    }
+    [data-theme="dark"] .tag:hover {
+      background: rgba(0,212,106,0.15);
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── CTA button ── */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      border: 1.5px solid var(--accent1);
+      color: var(--accent1);
+      transition: all 0.3s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--accent-grad);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary:hover { color: #fff; border-color: transparent; }
+    .btn-primary span { position: relative; z-index: 1; }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text2);
+      transition: all 0.3s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-hover);
+      color: var(--accent2);
+    }
+
+    /* ── Metric card ── */
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 16px;
+      text-align: center;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+    }
+    .metric-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+    .metric-num {
+      font-size: 1.9rem;
+      font-weight: 800;
+      background: var(--accent-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Section divider ── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+      opacity: 0.5;
+    }
+
+    /* ── Particle canvas ── */
+    #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+    /* ── Cursor glow ── */
+    #cursor-glow {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--scan) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: left 0.08s, top 0.08s;
+    }
+
+    /* ── Theme toggle ── */
+    #theme-toggle {
+      position: relative;
+      width: 52px; height: 28px;
+      border-radius: 99px;
+      cursor: pointer;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      transition: all 0.35s;
+      flex-shrink: 0;
+    }
+    #theme-toggle:hover { border-color: var(--border-hover); }
+    #theme-toggle .knob {
+      position: absolute;
+      top: 3px;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--accent-grad);
+      transition: left 0.35s cubic-bezier(0.34,1.56,0.64,1), background 0.35s;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+      left: 3px;
+    }
+    [data-theme="dark"] #theme-toggle .knob { left: 25px; }
+
+    /* ── Philosophy quote ── */
+    .quote-grad {
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.2;
+      background: var(--accent-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Pillar card ── */
+    .pillar-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: all 0.3s;
+    }
+    .glass:hover .pillar-icon {
+      border-color: var(--border-hover);
+      box-shadow: 0 0 20px var(--glow);
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent1); border-radius: 2px; }
+
+    /* ── Scan line (dark only) ── */
+    #scan-line { opacity: 0; transition: opacity 0.5s; }
+    [data-theme="dark"] #scan-line { opacity: 0.15; }
+
+    @keyframes scanLine {
+      0%   { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+    #scan-line-inner { animation: scanLine 5s linear infinite; }
+
+    /* ── Light hero decoration ── */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      color: var(--accent1);
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent-grad);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50%      { transform: scale(1.4); opacity: 0.7; }
+    }
+
+    /* Light-specific floating emoji decorations */
+    .float-deco {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      font-size: 2rem;
+      filter: drop-shadow(0 0 12px var(--glow));
+      transition: opacity 0.5s;
+    }
+    :root body .float-deco { opacity: 0.6; }
+    [data-theme="dark"] .float-deco { opacity: 0; }
+
+    /* ── Contact card link ── */
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 24px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    .contact-link:hover {
+      border-color: var(--border-hover);
+      background: var(--surface2);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .contact-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--tag-bg);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .contact-link:hover .contact-icon {
+      background: var(--accent-grad);
+    }
+    .contact-link:hover .contact-icon svg { color: white; }
+
+    /* ── Smooth theme transition for everything ── */
+    *, *::before, *::after {
+      transition-property: background-color, border-color, color, box-shadow;
+      transition-duration: 0.4s;
+      transition-timing-function: ease;
+    }
+    /* Don't transition transforms and sizes */
+    .skill-bar-fill, .reveal, #cursor-glow, .knob,
+    #particles, canvas, .mesh-blob, .float-deco, .nav-link::after {
+      transition-property: all;
+    }
+  </style>
+</head>
+
+<body class="bg-grid relative min-h-screen">
+
+  <!-- Theme transition flash overlay -->
+  <div id="theme-flash" style="position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0;background:var(--bg);transition:opacity 0.15s"></div>
+
+  <!-- Cursor glow -->
+  <div id="cursor-glow"></div>
+
+  <!-- Canvas particles -->
+  <canvas id="particles"></canvas>
+
+  <!-- Scan line (dark theme) -->
+  <div id="scan-line" class="fixed inset-0 pointer-events-none z-10 overflow-hidden">
+    <div id="scan-line-inner" class="w-full h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"></div>
+  </div>
+
+  <!-- Light theme mesh blobs -->
+  <div class="mesh-blob w-[600px] h-[600px] bg-violet-300 top-[-100px] left-[-200px]"></div>
+  <div class="mesh-blob w-[500px] h-[500px] bg-pink-300 top-[200px] right-[-150px]"></div>
+  <div class="mesh-blob w-[400px] h-[400px] bg-orange-200 bottom-[100px] left-[30%]"></div>
+
+  <!-- Light theme floating deco -->
+  <div class="float-deco animate-float top-32 left-16"  style="animation-delay:0s">⚡</div>
+  <div class="float-deco animate-float top-48 right-24" style="animation-delay:1.5s">🚀</div>
+  <div class="float-deco animate-float-slow bottom-48 left-1/4" style="animation-delay:3s">⚙️</div>
+
+  <!-- ─────────────────────── NAV ─────────────────────── -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50" style="transition: background 0.3s, border-color 0.3s">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#home" class="font-mono font-bold text-lg grad-text tracking-tight">
+        &lt;dev/&gt;
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 text-sm font-mono">
+        <a href="#about"      class="nav-link">./about</a>
+        <a href="#skills"     class="nav-link">./skills</a>
+        <a href="#philosophy" class="nav-link">./philosophy</a>
+        <a href="#contact"    class="nav-link">./contact</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Online indicator -->
+        <div class="flex items-center gap-1.5 text-xs font-mono" style="color:var(--accent1)">
+          <span class="badge-dot"></span>
+          <span>online</span>
+        </div>
+        <!-- Theme toggle -->
+        <button id="theme-toggle" aria-label="Toggle theme">
+          <div class="knob">
+            <span id="theme-icon">☀️</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─────────────────────── HERO ─────────────────────── -->
+  <section id="home" class="relative min-h-screen flex items-center justify-center z-10 px-6 pt-20 overflow-hidden">
+
+    <div class="max-w-4xl w-full text-center relative z-10">
+
+      <!-- Cat lover quote -->
+      <p class="animate-fade-in text-sm md:text-base font-mono mb-6" style="color:var(--muted); animation-delay:0s">
+        <span style="color:var(--accent2)">🐱</span>
+        I'm a cat lover, but dogs are adorable too.
+        <span style="color:var(--accent3)">🐶</span>
+      </p>
+
+      <!-- Badge -->
+      <div class="hero-badge mb-8 animate-fade-in" style="animation-delay:.05s">
+        <span class="badge-dot"></span>
+        backend_engineer.go — running...
+      </div>
+
+      <!-- Heading -->
+      <h1 class="text-5xl md:text-7xl font-black tracking-tight mb-4 animate-slide-up" style="animation-delay:.1s; color: var(--text)">
+        Backend
+        <span class="grad-text glow-text-light">Developer</span>
+      </h1>
+
+      <!-- Typed subtitle -->
+      <div class="font-mono text-lg md:text-xl mb-8 h-8 animate-slide-up" style="animation-delay:.2s; color: var(--accent1)">
+        <span id="typed-text"></span><span class="animate-cursor-blink" style="color:var(--accent2)">|</span>
+      </div>
+
+      <!-- Mission -->
+      <p class="max-w-2xl mx-auto text-base md:text-lg leading-relaxed mb-12 animate-slide-up" style="animation-delay:.3s; color: var(--text2)">
+        Xây dựng hệ thống <span style="color:var(--text);font-weight:700">ổn định</span>,
+        tối ưu hóa <span style="color:var(--text);font-weight:700">hiệu suất</span> và luôn ưu tiên
+        <span class="grad-text font-semibold">tính thực tế</span>.
+        Thay vì chạy theo công nghệ hào nhoáng —
+        <em style="color:var(--accent1);font-style:normal;font-weight:600">"chạy đúng, chạy nhanh và chạy tiết kiệm"</em>.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap items-center justify-center gap-4 animate-slide-up" style="animation-delay:.4s">
+        <a href="#contact" class="btn-primary text-sm px-8 py-3 rounded-lg">
+          <span>$ ./contact_me</span>
+        </a>
+        <a href="#skills" class="btn-secondary text-sm px-8 py-3 rounded-lg">
+          explore --skills
+        </a>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="mt-20 flex flex-col items-center gap-2 text-xs font-mono animate-fade-in" style="animation-delay:1.2s; color: var(--muted)">
+        <span>scroll down</span>
+        <div class="w-px h-10" style="background: linear-gradient(to bottom, var(--muted), transparent)"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─────────────────────── ABOUT ─────────────────────── -->
+  <section id="about" class="relative z-10 py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="reveal flex items-center gap-4 mb-16">
+        <span class="font-mono text-sm" style="color:var(--accent1)">01.</span>
+        <h2 class="text-3xl md:text-4xl font-bold" style="color:var(--text)">Về tôi</h2>
+        <div class="flex-1 h-px" style="background: linear-gradient(to right, var(--border-hover), transparent)"></div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+
+        <!-- Terminal block -->
+        <div class="reveal terminal">
+          <div class="terminal-bar">
+            <div class="dot bg-red-400 opacity-80"></div>
+            <div class="dot bg-yellow-400 opacity-80"></div>
+            <div class="dot bg-green-400 opacity-80"></div>
+            <span class="ml-2 text-xs font-mono" style="color:var(--muted)">~/profile.sh</span>
+          </div>
+          <div class="p-6 space-y-3 text-sm leading-relaxed font-mono">
+            <p><span class="term-prompt">$</span> <span class="term-cmd">whoami</span></p>
+            <p class="pl-4" style="color:var(--text);font-weight:600">Backend_Developer</p>
+
+            <p class="mt-2"><span class="term-prompt">$</span> <span class="term-cmd">cat mission.txt</span></p>
+            <p class="term-out pl-4 leading-relaxed">
+              Tôi là lập trình viên Backend với tư duy lấy
+              <span style="color:var(--accent1);font-weight:600">hiệu quả</span> làm trọng tâm.
+              Mục tiêu: tạo ra các hệ thống có giá trị thực tế, không chạy theo xu hướng.
+            </p>
+
+            <p class="mt-2"><span class="term-prompt">$</span> <span class="term-cmd">cat priorities.json</span></p>
+            <pre class="term-out pl-4 text-xs leading-loose"><span class="term-brace">{</span>
+  <span class="term-key">"run_correct"</span>: <span class="term-val-t">true</span>,
+  <span class="term-key">"run_fast"</span>:    <span class="term-val-t">true</span>,
+  <span class="term-key">"run_cheap"</span>:   <span class="term-val-t">true</span>,
+  <span class="term-key">"hype_driven"</span>: <span class="term-val-f">false</span>
+<span class="term-brace">}</span></pre>
+            <p><span class="term-prompt">$</span> <span class="term-cursor animate-cursor-blink">█</span></p>
+          </div>
+        </div>
+
+        <!-- Right: text + metrics -->
+        <div class="reveal space-y-6">
+          <p class="leading-relaxed text-base" style="color:var(--text2)">
+            Với triết lý <span style="color:var(--text);font-weight:700">"Code thực tế là Code giá trị"</span>,
+            mỗi dòng code phải vượt qua ba bài kiểm tra: nó có giải quyết được bài toán không?
+            Nó có thể bảo trì được không? Nó hiệu quả về chi phí vận hành không?
+          </p>
+
+          <div class="grid grid-cols-2 gap-4 mt-6">
+            <div class="metric-card">
+              <div class="metric-num">∞</div>
+              <div class="text-xs font-mono mt-1" style="color:var(--muted)">iterations</div>
+              <div class="text-sm mt-1" style="color:var(--text)">Không ngừng cải tiến</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-num">0%</div>
+              <div class="text-xs font-mono mt-1" style="color:var(--muted)">hype_driven</div>
+              <div class="text-sm mt-1" style="color:var(--text)">Luôn thực dụng</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-num">↑</div>
+              <div class="text-xs font-mono mt-1" style="color:var(--muted)">performance</div>
+              <div class="text-sm mt-1" style="color:var(--text)">Hiệu suất tối đa</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-num">↓</div>
+              <div class="text-xs font-mono mt-1" style="color:var(--muted)">cost</div>
+              <div class="text-sm mt-1" style="color:var(--text)">Chi phí tối thiểu</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─────────────────────── SKILLS ─────────────────────── -->
+  <section id="skills" class="relative z-10 py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="reveal flex items-center gap-4 mb-16">
+        <span class="font-mono text-sm" style="color:var(--accent1)">02.</span>
+        <h2 class="text-3xl md:text-4xl font-bold" style="color:var(--text)">Ngôn ngữ & Công cụ</h2>
+        <div class="flex-1 h-px" style="background: linear-gradient(to right, var(--border-hover), transparent)"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- Python card -->
+        <div class="reveal glass rounded-2xl p-8 group">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <!-- Official Python logo SVG -->
+              <div class="mb-3" style="width:52px;height:52px">
+                <svg viewBox="0 0 256 255" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" width="52" height="52">
+                  <defs><linearGradient id="pyGradTop" x1="12.959%" y1="12.039%" x2="79.639%" y2="78.201%"><stop offset="0%" stop-color="#387EB8"/><stop offset="100%" stop-color="#366994"/></linearGradient><linearGradient id="pyGradBot" x1="19.129%" y1="20.579%" x2="90.741%" y2="88.429%"><stop offset="0%" stop-color="#FFE052"/><stop offset="100%" stop-color="#FFC331"/></linearGradient></defs>
+                  <path d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.413 36.228 63.097 36.228 63.097h21.6v-30.356s-1.165-36.228 35.632-36.228h61.362s34.475.557 34.475-33.319V33.97S194.67.072 126.916.072zm-34.habilities475 19.561a11.547 11.547 0 1 1 0 23.094 11.547 11.547 0 0 1 0-23.094z" fill="url(#pyGradTop)"/>
+                  <path d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.128H127.6v-8.745h86.441s41.486 4.705 41.486-60.712c0-65.416-36.228-63.097-36.228-63.097h-21.6v30.356s1.165 36.228-35.632 36.228H100.065s-34.475-.557-34.475 33.319v56.013s-5.235 33.881 63.167 33.881zm34.148-19.453a11.547 11.547 0 1 1 0-23.094 11.547 11.547 0 0 1 0 23.094z" fill="url(#pyGradBot)"/>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold" style="color:var(--text)">Python</h3>
+              <p class="text-sm font-mono mt-1" style="color:var(--accent1)">Linh hồn của sự linh hoạt</p>
+            </div>
+            <span class="tag">primary</span>
+          </div>
+          <p class="text-sm leading-relaxed mb-6" style="color:var(--text2)">
+            Tôi sử dụng Python để <span style="color:var(--text);font-weight:600">hiện thực hóa các ý tưởng phức tạp</span>
+            một cách nhanh chóng và tinh gọn. Từ scripting cho đến APIs và automation.
+          </p>
+          <div class="space-y-2 mb-6">
+            <div class="flex justify-between text-xs font-mono" style="color:var(--muted)">
+              <span>proficiency</span>
+              <span style="color:var(--accent1)">expert</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full skill-bar-bg overflow-hidden">
+              <div class="skill-bar-fill h-full" data-width="92%" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">FastAPI</span>
+            <span class="tag">asyncio</span>
+            <span class="tag">automation</span>
+            <span class="tag">scripting</span>
+          </div>
+        </div>
+
+        <!-- Go card -->
+        <div class="reveal glass rounded-2xl p-8 group" style="transition-delay:0.1s">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <!-- Go Gopher mascot -->
+              <div class="mb-3" style="width:64px;height:64px;display:flex;align-items:center;justify-content:center">
+                <img
+                  src="https://go.dev/blog/gopher/gopher.png"
+                  alt="Go Gopher"
+                  width="60"
+                  height="60"
+                  style="object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,172,215,0.35));transition:transform 0.3s ease;"
+                  onmouseover="this.style.transform='scale(1.15) rotate(-5deg)'"
+                  onmouseout="this.style.transform='scale(1) rotate(0deg)'"
+                />
+              </div>
+              <h3 class="text-2xl font-bold" style="color:var(--text)">Go</h3>
+              <p class="text-sm font-mono mt-1" style="color:var(--accent1)">Sức mạnh của hiệu suất</p>
+            </div>
+            <span class="tag">preferred</span>
+          </div>
+          <p class="text-sm leading-relaxed mb-6" style="color:var(--text2)">
+            Lựa chọn ưu tiên cho các tác vụ <span style="color:var(--text);font-weight:600">xử lý song song</span>,
+            hệ thống <span style="color:var(--text);font-weight:600">chịu tải cao</span> và
+            <span style="color:var(--text);font-weight:600">tối ưu tài nguyên</span>.
+          </p>
+          <div class="space-y-2 mb-6">
+            <div class="flex justify-between text-xs font-mono" style="color:var(--muted)">
+              <span>proficiency</span>
+              <span style="color:var(--accent1)">advanced</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full skill-bar-bg overflow-hidden">
+              <div class="skill-bar-fill h-full" data-width="82%" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">goroutines</span>
+            <span class="tag">high-load</span>
+            <span class="tag">concurrency</span>
+            <span class="tag">microservices</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Other tools -->
+      <div class="reveal glass rounded-2xl p-8 mt-8">
+        <h3 class="text-sm font-mono mb-6" style="color:var(--accent1)">// other_tools</h3>
+        <div class="flex flex-wrap gap-2.5">
+          <span class="tag">Docker</span>
+          <span class="tag">Linux</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Redis</span>
+          <span class="tag">REST API</span>
+          <span class="tag">gRPC</span>
+          <span class="tag">CI/CD</span>
+          <span class="tag">Git</span>
+          <span class="tag">Nginx</span>
+          <span class="tag">System Design</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─────────────────────── PHILOSOPHY ─────────────────────── -->
+  <section id="philosophy" class="relative z-10 py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="reveal flex items-center gap-4 mb-16">
+        <span class="font-mono text-sm" style="color:var(--accent1)">03.</span>
+        <h2 class="text-3xl md:text-4xl font-bold" style="color:var(--text)">Triết lý phát triển</h2>
+        <div class="flex-1 h-px" style="background: linear-gradient(to right, var(--border-hover), transparent)"></div>
+      </div>
+
+      <!-- Big quote -->
+      <div class="reveal text-center mb-16 py-10 relative">
+        <div class="absolute inset-0 rounded-3xl opacity-5" style="background:var(--accent-grad)"></div>
+        <blockquote class="quote-grad">"Code thực tế là Code giá trị"</blockquote>
+        <p class="mt-4 text-sm font-mono" style="color:var(--muted)">— core_philosophy.md</p>
+      </div>
+
+      <!-- 3 pillars -->
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="reveal glass rounded-2xl p-8 group hover:-translate-y-2 duration-300">
+          <div class="pillar-icon mb-6 text-2xl">🔧</div>
+          <h3 class="text-lg font-bold mb-3" style="color:var(--text)">Tính thực dụng</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--text2)">
+            Một dòng code tốt không chỉ là <span style="color:var(--text);font-weight:600">Clean Code</span>, mà phải là code
+            <span style="color:var(--accent1)">dễ bảo trì</span> và
+            <span style="color:var(--accent1)">chịu được áp lực</span> từ môi trường vận hành thực tế.
+            Đồng thời phải có tiềm năng tạo ra <span style="color:var(--text);font-weight:600">giá trị thực tế</span>.
+          </p>
+          <div class="mt-6 pt-5" style="border-top: 1px solid var(--border)">
+            <span class="text-xs font-mono" style="color:var(--muted)">pragmatism.go</span>
+          </div>
+        </div>
+
+        <div class="reveal glass rounded-2xl p-8 group hover:-translate-y-2 duration-300" style="transition-delay:.1s">
+          <div class="pillar-icon mb-6 text-2xl">💰</div>
+          <h3 class="text-lg font-bold mb-3" style="color:var(--text)">Tối ưu chi phí</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--text2)">
+            Luôn hướng tới giải pháp có <span style="color:var(--accent1)">chi phí vận hành thấp nhất</span>
+            nhưng mang lại <span style="color:var(--text);font-weight:600">trải nghiệm người dùng tốt nhất</span>.
+            Hiệu quả kinh tế và hiệu suất kỹ thuật phải song hành.
+          </p>
+          <div class="mt-6 pt-5" style="border-top: 1px solid var(--border)">
+            <span class="text-xs font-mono" style="color:var(--muted)">cost_optimizer.py</span>
+          </div>
+        </div>
+
+        <div class="reveal glass rounded-2xl p-8 group hover:-translate-y-2 duration-300" style="transition-delay:.2s">
+          <div class="pillar-icon mb-6 text-2xl">🏗</div>
+          <h3 class="text-lg font-bold mb-3" style="color:var(--text)">Tư duy hệ thống</h3>
+          <p class="text-sm leading-relaxed" style="color:var(--text2)">
+            Tập trung vào <span style="color:var(--text);font-weight:600">kiến trúc backend vững chắc</span>, đảm bảo
+            <span style="color:var(--accent1)">tính ổn định</span> từ những tầng thấp nhất của
+            <span style="color:var(--text);font-weight:600">cơ sở hạ tầng</span>.
+            Mọi quyết định đều nhìn từ góc độ toàn hệ thống.
+          </p>
+          <div class="mt-6 pt-5" style="border-top: 1px solid var(--border)">
+            <span class="text-xs font-mono" style="color:var(--muted)">systems_thinking.md</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ─────────────────────── CONTACT ─────────────────────── -->
+  <section id="contact" class="relative z-10 py-24 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+
+      <div class="reveal flex items-center gap-4 mb-16 justify-center">
+        <span class="font-mono text-sm" style="color:var(--accent1)">04.</span>
+        <h2 class="text-3xl md:text-4xl font-bold" style="color:var(--text)">Kết nối với tôi</h2>
+      </div>
+
+      <div class="reveal glass rounded-3xl p-10">
+        <p class="leading-relaxed mb-10" style="color:var(--text2)">
+          Có dự án thú vị? Muốn trao đổi về kiến trúc hệ thống?<br/>
+          Tôi luôn sẵn sàng cho những cuộc trò chuyện có <span class="grad-text font-semibold">giá trị thực tế</span>.
+        </p>
+
+        <div class="space-y-4">
+          <!-- GitHub -->
+          <a href="https://github.com/Meo2k" id="github-link" target="_blank" rel="noopener" class="contact-link group">
+            <div class="contact-icon">
+              <svg class="w-5 h-5" style="color:var(--accent1)" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+            </div>
+            <div class="text-left flex-1">
+              <div class="text-xs font-mono" style="color:var(--muted)">github.com</div>
+              <div class="font-semibold" style="color:var(--text)">Meo2k</div>
+            </div>
+            <div class="text-sm font-mono" style="color:var(--accent1)">→</div>
+          </a>
+
+          <!-- GitLab -->
+          <a href="https://gitlab.com/lovecatdat" target="_blank" rel="noopener" class="contact-link group">
+            <div class="contact-icon">
+              <svg class="w-5 h-5" style="color:var(--accent1)" viewBox="0 0 380 380" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M282.83 170.73l-.27-.69-26.14-68.22a6.81 6.81 0 00-2.69-3.24 7 7 0 00-8 .43 7 7 0 00-2.32 3.52l-17.65 54H154.29l-17.65-54a6.86 6.86 0 00-2.32-3.52 7 7 0 00-8-.43 6.87 6.87 0 00-2.69 3.24L97.44 170l-.26.69a48.54 48.54 0 0016.1 56.1l.09.07.24.17 39.82 29.82 19.7 14.91 12 9.06a8.07 8.07 0 009.19 0l12-9.06 19.7-14.91 40.06-30 .1-.08a48.56 48.56 0 0016.16-56.04z" fill="#FC6D26"/>
+                <path d="M282.83 170.73l-.27-.69a88.3 88.3 0 00-35.15 19.38L190 243.39c19.55 14.79 36.57 27.64 36.57 27.64l40.06-30 .1-.08a48.56 48.56 0 0016.1-56.22z" fill="#E24329"/>
+                <path d="M153.43 271l19.7 14.91 12 9.06a8.07 8.07 0 009.19 0l12-9.06 19.7-14.91S209.55 258.2 190 243.4c-19.55 14.79-36.57 27.6-36.57 27.6z" fill="#FCA326"/>
+                <path d="M132.58 189.42A88.2 88.2 0 0097.44 170l-.26.69a48.54 48.54 0 0016.1 56.1l.09.07.24.17 39.82 29.82S170 244 190 229.2c-19.55-14.8-57.42-39.78-57.42-39.78z" fill="#E24329"/>
+              </svg>
+            </div>
+            <div class="text-left flex-1">
+              <div class="text-xs font-mono" style="color:var(--muted)">gitlab.com</div>
+              <div class="font-semibold" style="color:var(--text)">lovecatdat</div>
+            </div>
+            <div class="text-sm font-mono" style="color:var(--accent1)">→</div>
+          </a>
+
+          <!-- Interest areas -->
+          <div class="contact-link" style="cursor:default">
+            <div class="contact-icon">
+              <span class="text-lg">🎯</span>
+            </div>
+            <div class="text-left flex-1">
+              <div class="text-xs font-mono mb-2" style="color:var(--muted)">lĩnh_vực_quan_tâm[]</div>
+              <div class="flex flex-wrap gap-2">
+                <span class="tag">Backend System</span>
+                <span class="tag">High Performance</span>
+                <span class="tag">System Design</span>
+                <span class="tag">Cost Optimization</span>
+                <span class="tag">Go / Python</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 pt-8" style="border-top: 1px solid var(--border)">
+          <p class="text-xs font-mono" style="color:var(--muted)">
+            <span style="color:var(--accent1)">//</span> Ưu tiên những cuộc trao đổi có giá trị thực tế
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────── FOOTER ─────────────────────── -->
+  <footer class="relative z-10 py-8 px-6 text-center" style="border-top: 1px solid var(--border)">
+    <p class="font-mono text-xs" style="color:var(--muted)">
+      <span style="color:var(--accent1)">$</span> built with pragmatism · no hype · only value
+      <span style="color:var(--muted); margin-left:8px">// EOF</span>
+    </p>
+  </footer>
+
+  <!-- ─────────────────────── SCRIPTS ─────────────────────── -->
+  <script>
+    /* ── Theme Toggle ── */
+    const root    = document.documentElement;
+    const toggle  = document.getElementById('theme-toggle');
+    const icon    = document.getElementById('theme-icon');
+    const flash   = document.getElementById('theme-flash');
+    const canvas  = document.getElementById('particles');
+    const ctx     = canvas.getContext('2d');
+
+    // Default: light
+    let isDark = false;
+
+    function getParticleColor() {
+      const s = getComputedStyle(root);
+      return {
+        r: parseInt(s.getPropertyValue('--particle-r').trim()),
+        g: parseInt(s.getPropertyValue('--particle-g').trim()),
+        b: parseInt(s.getPropertyValue('--particle-b').trim()),
+      };
+    }
+
+    toggle.addEventListener('click', () => {
+      // Flash transition
+      flash.style.opacity = '0.4';
+      setTimeout(() => {
+        isDark = !isDark;
+        if (isDark) {
+          root.setAttribute('data-theme', 'dark');
+          icon.textContent = '🌙';
+        } else {
+          root.removeAttribute('data-theme');
+          icon.textContent = '☀️';
+        }
+        flash.style.opacity = '0';
+      }, 150);
+    });
+
+    /* ── Cursor glow ── */
+    const glow = document.getElementById('cursor-glow');
+    document.addEventListener('mousemove', e => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top  = e.clientY + 'px';
+    });
+
+    /* ── Navbar scroll style ── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.style.background   = 'var(--nav-bg)';
+        navbar.style.backdropFilter = 'blur(20px)';
+        navbar.style.borderBottom = '1px solid var(--border)';
+      } else {
+        navbar.style.background   = 'transparent';
+        navbar.style.backdropFilter = 'none';
+        navbar.style.borderBottom = 'none';
+      }
+    });
+
+    /* ── Typed text ── */
+    const phrases = [
+      'Build systems that scale.',
+      'Optimize. Simplify. Ship.',
+      'Performance over hype.',
+      'Reliability is a feature.',
+    ];
+    let pIdx = 0, cIdx = 0, deleting = false;
+    const typedEl = document.getElementById('typed-text');
+    function typeLoop() {
+      const cur = phrases[pIdx];
+      if (!deleting) {
+        typedEl.textContent = cur.slice(0, ++cIdx);
+        if (cIdx === cur.length) { deleting = true; setTimeout(typeLoop, 1800); return; }
+      } else {
+        typedEl.textContent = cur.slice(0, --cIdx);
+        if (cIdx === 0) { deleting = false; pIdx = (pIdx + 1) % phrases.length; }
+      }
+      setTimeout(typeLoop, deleting ? 38 : 68);
+    }
+    typeLoop();
+
+    /* ── Scroll reveal ── */
+    const reveals = document.querySelectorAll('.reveal');
+    const revObs  = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 70);
+          revObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => revObs.observe(el));
+
+    /* ── Skill bars ── */
+    const bars   = document.querySelectorAll('.skill-bar-fill');
+    const barObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.width = e.target.dataset.width;
+          barObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    bars.forEach(b => barObs.observe(b));
+
+    /* ── Particle canvas ── */
+    let particles = [];
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.28;
+        this.vy = (Math.random() - 0.5) * 0.28;
+        this.alpha = Math.random() * 0.35 + 0.06;
+        this.size  = Math.random() * 1.8 + 0.5;
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+      }
+      draw(r, g, b) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r},${g},${b},${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 75; i++) particles.push(new Particle());
+
+    function drawLines(r, g, b) {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx   = particles[i].x - particles[j].x;
+          const dy   = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 115) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(${r},${g},${b},${0.055 * (1 - dist/115)})`;
+            ctx.lineWidth   = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const { r, g, b } = getParticleColor();
+      particles.forEach(p => { p.update(); p.draw(r, g, b); });
+      drawLines(r, g, b);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
